@@ -3,9 +3,13 @@ package client;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import routes.UnitConversionHandler;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 
 public class SimpleHttpServer {
     public void runServer(Integer port)
@@ -15,7 +19,9 @@ public class SimpleHttpServer {
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
             // Create a context for a specific path and set the handler
+            // Routes
             server.createContext("/", new MyHandler());
+            server.createContext("/conversions", new UnitConversionHandler());
 
             // Start the server
             server.setExecutor(null); // Use the default executor
@@ -33,8 +39,8 @@ public class SimpleHttpServer {
         @Override
         public void handle(HttpExchange exchange) throws IOException
         {
-            java.io.InputStream is = exchange.getRequestBody();
-            String body = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            InputStream is = exchange.getRequestBody();
+            String body = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             System.out.println("Corpo recebido: " + body);
 
             // Handle the request
