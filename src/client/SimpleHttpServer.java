@@ -1,17 +1,18 @@
+package client;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
 public class SimpleHttpServer {
-    public static void main(String[] args)
+    public void runServer(Integer port)
     {
         try {
             // Create an HttpServer instance
-            HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+            HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
             // Create a context for a specific path and set the handler
             server.createContext("/", new MyHandler());
@@ -20,7 +21,8 @@ public class SimpleHttpServer {
             server.setExecutor(null); // Use the default executor
             server.start();
 
-            System.out.println("Server is running on port 8000");
+            System.out.println("Server is running on port " + port);
+            System.out.println("http://localhost:" + port);
         } catch (IOException e) {
             System.out.println("Error starting the server: " + e.getMessage());
         }
