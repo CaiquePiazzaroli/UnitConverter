@@ -18,7 +18,7 @@ public class UnitConversionHandler implements HttpHandler {
         InputStream is = exchange.getRequestBody();
         String json = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
-        String response = "";
+        String response;
 
         if(checkRequest(json)) {
             response = "OK";
