@@ -7,22 +7,17 @@ import services.strategies.WeightConversor;
 
 public class UnitConversionService {
     public static double convert(ConversionRequest conversionRequest) {
-
         String unit = conversionRequest.getUnit();
         switch (unit.toLowerCase()) {
             case "temperature":
-                TemperatureConversor.convert(conversionRequest.getFrom(), conversionRequest.getTo(), conversionRequest.getValue());
-                break;
+                return TemperatureConversor.convert(conversionRequest.getFrom(), conversionRequest.getTo(), conversionRequest.getValue());
             case "weight":
-                WeightConversor.convert(conversionRequest.getFrom(), conversionRequest.getTo(), conversionRequest.getValue());
-                break;
+                return WeightConversor.convert(conversionRequest.getFrom(), conversionRequest.getTo(), conversionRequest.getValue());
             case "length":
-                LengthConversor.convert(conversionRequest.getFrom(), conversionRequest.getTo(), conversionRequest.getValue());
-                break;
+                return LengthConversor.convert(conversionRequest.getFrom(), conversionRequest.getTo(), conversionRequest.getValue());
             default:
                 System.out.println("Não foi possivel covnerter a unidade: " + unit);
         }
-
         return 0;
     }
 

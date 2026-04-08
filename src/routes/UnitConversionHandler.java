@@ -21,10 +21,9 @@ public class UnitConversionHandler implements HttpHandler {
         String response;
 
         if(checkRequest(json)) {
-            response = "OK";
-            exchange.sendResponseHeaders(200, response.length());
             ConversionRequest request = ConversionRequestParser.parse(json);
-            UnitConversionService.convert(request);
+            response = "Result:" + UnitConversionService.convert(request);
+            exchange.sendResponseHeaders(200, response.length());
         } else {
             response = "Bad request 404";
             exchange.sendResponseHeaders(400, response.length());
