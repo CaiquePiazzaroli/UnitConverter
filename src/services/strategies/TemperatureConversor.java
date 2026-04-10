@@ -3,30 +3,42 @@ package services.strategies;
 public class TemperatureConversor {
 
     public static double convert(String from, String to, double value) {
-        System.out.println("De: " + from);
-        System.out.println("Para: " + to);
-        System.out.println("O valor:" + value);
-
         if(from.equalsIgnoreCase("celsius") && to.equalsIgnoreCase("fahrenheit")) {
             return celsiusToFahrenheit(value);
         } else if (from.equalsIgnoreCase("fahrenheit") && to.equalsIgnoreCase("celsius")) {
             return fahrenheitToCelsius(value);
         }
-
         return 0.0;
     }
 
-    private static double celsiusToFahrenheit(double value) {
-        //(0 °C × 9/5) + 32 = 32 °F
+    private static double celsiusToFahrenheit(double celsius) {
         System.out.println("Celsius to fahrenheit");
-        return (value * ((float) 9/5)) + 32;
+        return (celsius * ((float) 9/5)) + 32;
     }
 
-    private static double fahrenheitToCelsius(double value) {
-        //(32 °F − 32) × 5/9 = 0 °C
+    private static double fahrenheitToCelsius(double fahrenheit) {
         System.out.println("Fah to celsius");
-        return (value - 32) * 5/9;
+        return (fahrenheit - 32) * 5/9;
+    }
 
+    private static double kelvinToFahrenheit(double kelvin) {
+        System.out.println("Kelvin to fahrenheit");
+        return  (kelvin - 273.15) * 9/5 + 32;
+    }
+
+    private static double fahrenheitToKelvin(double fahrenheit) {
+        System.out.println("fahrenheit to Kelvin");
+        return (fahrenheit - 32) * 5/9 + 273.15;
+    }
+
+    private static double celsiusToKelvin(double celsius) {
+        System.out.println("Celsius to kelvin");
+        return celsius + 273.15;
+    }
+
+    private static double KelvinToCelsius(double kelvin) {
+        System.out.println("kelvin to celsius");
+        return kelvin - 273.15;
     }
 
 }
