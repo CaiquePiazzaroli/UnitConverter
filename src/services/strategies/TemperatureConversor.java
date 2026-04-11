@@ -1,44 +1,39 @@
 package services.strategies;
 
+import java.util.Map;
+import java.util.function.DoubleUnaryOperator;
+
 public class TemperatureConversor {
 
+    // Mapa de funções para evitar if-else gigantesco
+    // Key: "FROM-TO", Value: Operação matemática
+    private static final Map<String, DoubleUnaryOperator> CONVERSIONS = Map.of(
+            "CELSIUS-FAHRENHEIT", v -> (v * 9 / 5) + 32,
+            "FAHRENHEIT-CELSIUS", v -> (v - 32) * 5 / 9,
+            "CELSIUS-KELVIN",     v -> v + 273.15,
+            "KELVIN-CELSIUS",     v -> v - 273.15,
+            "KELVIN-FAHRENHEIT",  v -> (v - 273.15) * 9 / 5 + 32,
+            "FAHRENHEIT-KELVIN",  v -> (v - 32) * 5 / 9 + 273.15
+    );
+
+
     public static double convert(String from, String to, double value) {
-        if(from.equalsIgnoreCase("celsius") && to.equalsIgnoreCase("fahrenheit")) {
-            return celsiusToFahrenheit(value);
-        } else if (from.equalsIgnoreCase("fahrenheit") && to.equalsIgnoreCase("celsius")) {
-            return fahrenheitToCelsius(value);
+
+        // Se from e to forem iguais, retorna o valor
+        if (from.equalsIgnoreCase(to)) return value;
+
+        // Cria uma chave formado pelas variaveis from e to ex: CELSIUS-FAHRENHEIT
+        String key = (from + "-" + to).toUpperCase().trim();
+
+        // Pega o resultado da operação na constante CONVERSIONS utilizando a chave construida
+        DoubleUnaryOperator operation = CONVERSIONS.get(key);
+
+        // Verificando se o resultado é nulo
+        if (operation == null) {
+            throw new UnsupportedOperationException("Conversão de " + from + " para " + to + " não suportada.");
         }
-        return 0.0;
-    }
 
-    private static double celsiusToFahrenheit(double celsius) {
-        System.out.println("Celsius to fahrenheit");
-        return (celsius * ((float) 9/5)) + 32;
+        // Retorna se houver resultado
+        return operation.applyAsDouble(value);
     }
-
-    private static double fahrenheitToCelsius(double fahrenheit) {
-        System.out.println("Fah to celsius");
-        return (fahrenheit - 32) * 5/9;
-    }
-
-    private static double kelvinToFahrenheit(double kelvin) {
-        System.out.println("Kelvin to fahrenheit");
-        return  (kelvin - 273.15) * 9/5 + 32;
-    }
-
-    private static double fahrenheitToKelvin(double fahrenheit) {
-        System.out.println("fahrenheit to Kelvin");
-        return (fahrenheit - 32) * 5/9 + 273.15;
-    }
-
-    private static double celsiusToKelvin(double celsius) {
-        System.out.println("Celsius to kelvin");
-        return celsius + 273.15;
-    }
-
-    private static double KelvinToCelsius(double kelvin) {
-        System.out.println("kelvin to celsius");
-        return kelvin - 273.15;
-    }
-
 }

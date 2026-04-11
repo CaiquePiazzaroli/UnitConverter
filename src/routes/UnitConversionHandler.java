@@ -35,7 +35,7 @@ public class UnitConversionHandler implements HttpHandler {
                 // Convertento o valor recebido
                 double result = UnitConversionService.convert(request);
 
-                // Estruturando a resposta
+                // Estruturando a resposta e formatando valor para duas casas decimais
                 String response = String.format("{\"result\": %.2f}", result);
 
                 // Enviando a resposta para o client
