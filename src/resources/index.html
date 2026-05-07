@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Unit Converter</title>
+    
+</head>
+<body>
+    <div class="card" id="form-card">
+        <h2>Unit Converter</h2>
+        <div class="tabs">
+            <span class="tab" id="tab-length" onclick="setUnit('length')">Length</span>
+            <span class="tab" id="tab-weight" onclick="setUnit('weight')">Weight</span>
+            <span class="tab" id="tab-temperature" onclick="setUnit('temperature')">Temperature</span>
+        </div>
+
+        <form id="converterForm">
+            <input type="hidden" id="unitInput" name="unit" value="length">
+
+            <div class="field">
+                <label id="label-value">Enter the value to convert</label>
+                <input type="number" name="value" step="any" placeholder="0.00" required>
+            </div>
+
+            <div class="field">
+                <label>Unit to Convert from</label>
+                <select id="fromSelect" name="from" required></select>
+            </div>
+
+            <div class="field">
+                <label>Unit to Convert to</label>
+                <select id="toSelect" name="to" required></select>
+            </div>
+
+            <button type="submit">Convert</button>
+        </form>
+    </div>
+
+    <div class="card" id="result-container">
+        <h2>Unit Converter</h2>
+        <div class="tabs">
+            <span class="tab active" id="res-tab-label">Length</span>
+        </div>
+        <p style="color: #666;">Result of your calculation</p>
+        <div class="result-value" id="result-display">20 ft = 609cm</div>
+        <button onclick="resetForm()">Reset</button>
+    </div>
+
+<script>
+    
+</script>
+</body>
+</html>

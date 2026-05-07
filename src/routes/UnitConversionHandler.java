@@ -15,6 +15,15 @@ public class UnitConversionHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
+        // Resolving CORS
+        exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+            exchange.sendResponseHeaders(204, -1);
+            return;
+        }
+
         // Validando o metodo da requisição
         if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
             sendResponse(exchange, "Method Not Allowed", 405);
@@ -36,12 +45,13 @@ public class UnitConversionHandler implements HttpHandler {
                 double result = UnitConversionService.convert(request);
 
                 // Estruturando a resposta e formatando valor para duas casas decimais
-                String response = String.format("{\"result\": %.2f}", result);
+                String response = String.format("{\"result\": \"%.2f\"}", result);
 
                 // Enviando a resposta para o client
                 sendResponse(exchange, response, 200);
             } else {
-                sendResponse(exchange, "{\"error\": \"Invalid request payload\"}", 400);
+                sendResponse(exchange, "{\"error\": \"Invalid request payload\" }", 400);
+                System.out.println(json);
             }
         } catch (Exception e) {
             sendResponse(exchange, "{\"error\": \"Internal Server Error\"}", 500);
